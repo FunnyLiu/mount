@@ -1,9 +1,25 @@
+# 源码解读
+
+提供一个中间件，使得子路由可以挂在koa的app对象或者中间件。
+
+## 逐个文件分析
+
+### index.js
+
+对传入的app对象或者中间件对象进行类型判断。
+
+基于koa-compose合并中间件。
+
+返回一个中间件，在请求阶段如果路径匹配正确，则执行合并后的中间件内容。
+
+
 # koa-mount
 
   Mount other Koa applications as middleware. The `path` passed to `mount()` is stripped
   from the URL temporarily until the stack unwinds. This is useful for creating entire
   apps or middleware that will function correctly regardless of which path segment(s)
   they should operate on.
+
 
 ## Installation
 

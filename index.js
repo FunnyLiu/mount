@@ -33,6 +33,8 @@ function mount (prefix, app) {
   assert.equal(prefix[0], '/', 'mount path must begin with "/"')
 
   // compose
+  // 如果传入的是app对象，将其中间价基于koa-compose进行合并，
+  // 否则，传入的为中间件对象
   const downstream = app.middleware
     ? compose(app.middleware)
     : app
@@ -49,9 +51,11 @@ function mount (prefix, app) {
     const prev = ctx.path
     const newPath = match(prev)
     debug('mount %s %s -> %s', prefix, name, newPath)
+    // 如果匹配到，执行中间件
     if (!newPath) return await upstream()
 
     ctx.mountPath = prefix
+    // 设置对应的path
     ctx.path = newPath
     debug('enter %s -> %s', prev, ctx.path)
 
